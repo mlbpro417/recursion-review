@@ -9,8 +9,30 @@ var stringifyJSON = function(obj) {
   // object numbers dont have quotes but strings do
   // function output null
   // boolean output as boolean 
-  
-  if (typeof obj === 'strings') {
+  var result = [];
+  if (Array.isArray(obj)) {
+    
+    for (let i = 0; i < obj.length; i++) {
+
+      if (typeof obj[i] !== 'function' && typeof obj[i] !== undefined) {
+        if (Array.isArray(obj[i])) {
+          stringifyJSON(obj[i]);
+        }
+        // we dont have to look if its a string on ln 16
+        // return that value   
+        // inside the [] are the obj[i], ',' 
+        result.push(obj[i]);
+        
+      }
+      
+    }
+    return result;
+
+  }
+  if (typeof obj === 'number') {
+    return "'" + obj + "'";
+  }
+  if (typeof obj === 'string') {
     return '"' + obj + '"';
   }
 };
