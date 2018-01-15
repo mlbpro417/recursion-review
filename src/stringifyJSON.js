@@ -26,6 +26,24 @@ var stringifyJSON = function(obj) {
     return '[' + result + ']';
 
   }
+  if (typeof obj === 'object' && obj) {
+    // do a for in loop
+    // the objects key should be "" and the property ""
+    // key = "" and obj[key] = ""
+    // if (obj === null) {
+    //   return 'null';    
+    // }
+    var result = [];
+    for (let key in obj) {
+      
+      if (obj[key] !== undefined && typeof obj[key] !== 'function') {
+        // use recursion for the key and property since we dont know its data type
+        result.push(stringifyJSON(key) + ':' + stringifyJSON(obj[key]));
+      }
+    }
+    
+    return '{' + result + '}';
+  }
   
   if (typeof obj === 'string') {
     return '"' + obj + '"';
